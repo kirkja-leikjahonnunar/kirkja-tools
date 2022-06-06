@@ -1,3 +1,4 @@
+import os
 import bpy
 
 #---------------------
@@ -52,6 +53,7 @@ class VIEW3D_PT_gltf_export(bpy.types.Panel):
         pass
     
     print("I see you!")
+    print(os.getcwd())
     
     
 def register():
