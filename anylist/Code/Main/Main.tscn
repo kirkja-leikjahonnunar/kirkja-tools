@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://d0akjtoohlhiq"]
+
+[ext_resource type="Script" path="res://Main/Main.gd" id="1_u7f88"]
+[ext_resource type="PackedScene" uid="uid://d3gr6sqfpx2l2" path="res://List/List.tscn" id="2_h12ur"]
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( "1_u7f88" )
+
+[node name="List" parent="." instance=ExtResource( "2_h12ur" )]

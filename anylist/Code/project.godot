@@ -1,0 +1,43 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+_global_script_classes=[{
+"base": "Button",
+"class": &"Item",
+"language": &"GDScript",
+"path": "res://Item/Item.gd"
+}, {
+"base": "Control",
+"class": &"List",
+"language": &"GDScript",
+"path": "res://List/List.gd"
+}]
+_global_script_class_icons={
+"Item": "",
+"List": ""
+}
+
+[application]
+
+config/name="Any List"
+run/main_scene="res://Main/Main.tscn"
+config/icon="res://Main/icon.png"
+config/features=PackedStringArray("4.0", "Vulkan Clustered")
+
+[autoload]
+
+Singleton="*res://Main/Singleton.gd"
+
+[display]
+
+window/size/viewport_width=1080
+window/size/viewport_height=1920
+window/handheld/orientation=6
+window/stretch/mode="canvas_items"

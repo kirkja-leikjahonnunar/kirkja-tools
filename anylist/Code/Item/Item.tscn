@@ -1,0 +1,45 @@
+[gd_scene load_steps=2 format=3 uid="uid://djxwiisns4i24"]
+
+[ext_resource type="Script" path="res://Item/Item.gd" id="1_ep4bs"]
+
+[node name="Item" type="Button"]
+minimum_size = Vector2(0, 60)
+anchor_right = 1.0
+size_flags_horizontal = 3
+theme_override_font_sizes/font_size = 30
+script = ExtResource( "1_ep4bs" )
+
+[node name="Title" type="Label" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_right = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Item Title"
+vertical_alignment = 1
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="EditTitle" type="LineEdit" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 25.0
+offset_right = -25.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 30
+text = "Edit Title"
+placeholder_text = "What is the item name?"
+metadata/_edit_layout_mode = 1
+metadata/_edit_use_custom_anchors = false
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+
+[connection signal="button_down" from="." to="." method="_on_item_button_down"]
+[connection signal="button_up" from="." to="." method="_on_item_button_up"]
+[connection signal="pressed" from="." to="." method="_on_item_pressed"]
+[connection signal="text_submitted" from="EditTitle" to="." method="_on_line_edit_text_submitted"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
