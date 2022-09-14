@@ -1,29 +1,39 @@
 #!/bin/bash
 
+# moon_raker
 # The $1 here is local; passed in from below.
 # $2 = the repo we are parsing for.
 
 MagicDocs ()
 {
-  full_name=$1
-  repo=$2
+  # How to strip out useful strings.
+  full_path=$1
 
-  directory="$(dirname "${full_name}")"
-  file="$(basename "${full_name}")"
+  directory="$(dirname "${full_path}")"
+  file="$(basename "${full_path}")"
+
   echo $full_name
   echo "[${directory}] [${file}]"
-  echo $repo
 
-  if [ "$repo" = "kirkja-audio" ]
+  # The meat!
+  repo=""
+  if [ "$2" = "### SFX" ] ||  [ "$2" = "### Music" ]
     then
-      echo "Zoinks!"
+      repo="~/Kirkja/repos/kirkja-audio/"
+      echo here
   fi
-  # if ${repo}  "kirkja-audio"
+  # if [ "$2" = "### Music" ]
   #   then
-  #     echo "Finally!"
+  #     repo="~/Kirkja/repos/kirkja-audio/"
   # fi
-
-  #repo=""
+  if [ "$2" = "### Mesh" ]
+    then
+      repo="~/Kirkja/repos/kirkja-3d/"
+  fi
+  if [ "$2" = "### Model" ]
+    then
+      repo="~/Kirkja/repos/kirkja-3d/"
+  fi
 
   #     ln -s $2 $repo/Worlds/Voxeland/Contexts/Voxeling/README.md
   #     cd ~/Kirkja/repos/kirkja-audio/Worlds/Voxeland/Contexts/Voxeling/README.md
@@ -35,24 +45,23 @@ MagicDocs ()
   #     echo repo
   # fi
   #
-  # if grep -q "$1" $2
-  #   then
-  #     repo=
-  #     echo "Found "$1"."
-  #     echo "at: $repo"
-  #     echo "to: $2"
-  #     ln -s $2 $repo/Worlds/Voxeland/Contexts/Voxeling/README.md
-  #     cd ~/Kirkja/repos/kirkja-audio/Worlds/Voxeland/Contexts/Voxeling/README.md
-  #     symlinks -cr . # Convert all the
-  #
-  #   # else
-  #   #  echo "No $1 found in $2."
-  # fi
+  if grep -q "$1" $2
+    then
+      echo "Found "$1"."
+      echo "at: $repo"
+      echo "to: $2"
+      ln -s $2 $repo/Worlds/Voxeland/Contexts/Voxeling/README.md
+      cd ~/Kirkja/repos/kirkja-audio/Worlds/Voxeland/Contexts/Voxeling/README.md
+      symlinks -cr . # Convert all the slinks to relative.
+
+    # else
+    #  echo "No $1 found in $2."
+  fi
 }
 
 # The $1 here is the parameter passed into the script.
-MagicDocs $1 "kirkja-audio"
-#MagicDocs "### Music" $1
+MagicDocs $1 "### SFX"
+MagicDocs $1 "### Armature"
 
 
 
