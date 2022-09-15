@@ -1,58 +1,57 @@
 #!/bin/bash
 
-# moon_raker
-# The $1 here is local; passed in from below.
-# $2 = the repo we are parsing for.
+
+# The function's $1 variable is local to the function.
+# We just happen to be passing in the script's S1 variable from below. :Þ
+# $2 is the search string to parse the "README.md".
 
 MagicDocs ()
 {
-  # How to strip out useful strings.
-  full_path=$1
+  readme_path=$1
+  directory="$(dirname "${readme_path}")"
+  file="$(basename "${readme_path}")"
+  target_repo=""
 
-  directory="$(dirname "${full_path}")"
-  file="$(basename "${full_path}")"
 
-  echo $full_name
-  echo "[${directory}] [${file}]"
-
-  # The meat!
-  repo=""
+  # Set the repo vaiable to the path based on our search criteria.
   if [ "$2" = "### SFX" ] ||  [ "$2" = "### Music" ]
     then
-      repo="~/Kirkja/repos/kirkja-audio/"
-      echo here
+      #repo="../kirkja-audio"
+      target_repo="~/Kirkja/repos/kirkja-audio/"
   fi
-  # if [ "$2" = "### Music" ]
-  #   then
-  #     repo="~/Kirkja/repos/kirkja-audio/"
-  # fi
-  if [ "$2" = "### Mesh" ]
+  if [ "$2" = "### Model" ] || [ "$2" = "### Rig" ] || [ "$2" = "### Animation" ]
     then
-      repo="~/Kirkja/repos/kirkja-3d/"
-  fi
-  if [ "$2" = "### Model" ]
-    then
-      repo="~/Kirkja/repos/kirkja-3d/"
+      target_repo="~/Kirkja/repos/kirkja-3d/"
   fi
 
-  #     ln -s $2 $repo/Worlds/Voxeland/Contexts/Voxeling/README.md
-  #     cd ~/Kirkja/repos/kirkja-audio/Worlds/Voxeland/Contexts/Voxeling/README.md
-  #     symlinks -cr . # Convert all the
 
-  # if "$1" != "$poo"
-  #   then
-  #     repo="~/Kirkja/repos/kirkja-audio/"
-  #     echo repo
-  # fi
-  #
-  if grep -q "$1" $2
+  # Rake the "README.md" for asset descriptions.
+  if grep -q "## Assets" $readme_path
     then
-      echo "Found "$1"."
-      echo "at: $repo"
-      echo "to: $2"
-      ln -s $2 $repo/Worlds/Voxeland/Contexts/Voxeling/README.md
-      cd ~/Kirkja/repos/kirkja-audio/Worlds/Voxeland/Contexts/Voxeling/README.md
-      symlinks -cr . # Convert all the slinks to relative.
+      echo "Found "$2". Targeting "$target_repo
+
+      results=() # A blank array to hold our results.
+      delimiter="Client/" # Split via "Client/" string delimeter.
+      s=$directory$delimiter # Add one last delimeter to the end. So we know where to stop?
+
+      while [[ $s ]]
+        do
+          results+=( "${s%%"$delimiter"*}" )
+          s=${s#*"$delimiter"}
+        done
+
+      #printf '%s\n' "$target_repo${results[1]}"
+      # declare -p file_array # To print the entire array.
+      target_dir=$target_repo"${results[1]}"
+      echo ${target_dir}
+      #mkdir -p $target_dir # Using -p will make all the parent directories if it doen't yet exist.
+      #mkdir -p ~/Kirkja/repos/kirkja-audio/Worlds/Dagazheim/Contexts/Dagazling/
+      mkdir -p ${target_dir}
+      echo
+
+      #ln -s $2 $repo/Worlds/Voxeland/Contexts/Voxeling/README.md
+      #cd ~/Kirkja/repos/kirkja-audio/Worlds/Voxeland/Contexts/Voxeling/README.md
+      #symlinks -cr . # Convert all the slinks to relative.
 
     # else
     #  echo "No $1 found in $2."
@@ -61,9 +60,21 @@ MagicDocs ()
 
 # The $1 here is the parameter passed into the script.
 MagicDocs $1 "### SFX"
-MagicDocs $1 "### Armature"
+MagicDocs $1 "### Music"
+MagicDocs $1 "### Model"
+MagicDocs $1 "### Rig"
+MagicDocs $1 "### Animation"
 
 
+
+#!/bin/bash
+# moon_raker lol.
+#Example for bash split string by another string
+
+
+# How to strip out useful strings.
+# directory="$(dirname "${full_path}")"
+# file="$(basename "${full_path}")"
 
 # Go look in this folder.
 # Parse "README.md" for an "# assets" heading.

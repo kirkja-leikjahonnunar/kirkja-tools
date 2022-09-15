@@ -1,9 +1,9 @@
-# Magic Docs
+# Magic Docs Tool
 A bash script that rakes through the "kirkja/Client" folder, looking for all "READEME.md" files, and creates symlinks in the appropriate folders for asset creators.
 
 ### From the Terminal
-```text
-$ bash magic_docs.sh
+```bash
+$ readme_finder.sh
 ```
 
 ## Repos Updated
